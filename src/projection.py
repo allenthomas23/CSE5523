@@ -1,0 +1,1 @@
+"""Projection logic placeholder."""
