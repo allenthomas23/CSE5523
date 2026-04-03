@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.loss import logistic_loss, signed_margin
+from src.loss import logistic_loss, score
 
 
 class ScalarSummary:

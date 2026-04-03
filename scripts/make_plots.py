@@ -1,4 +1,3 @@
-import argparse
 import json
 from pathlib import Path
 import sys
@@ -31,23 +30,10 @@ def load_results(path):
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--input",
-        default="results/experiment_results.json",
-        help="Path to the JSON file created by one of the run scripts.",
-    )
-    parser.add_argument(
-        "--output-dir",
-        default="results/plots",
-        help="Directory where the PNG figures will be written.",
-    )
-    args = parser.parse_args()
-
     import matplotlib.pyplot as plt
 
-    input_path = Path(args.input)
-    output_dir = Path(args.output_dir)
+    input_path = Path("results/experiment_results.json")
+    output_dir = Path("results/plots")
     output_dir.mkdir(parents=True, exist_ok=True)
 
     results = load_results(input_path)
