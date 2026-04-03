@@ -9,3 +9,4 @@ results/*.json
 results/plots/
 
 tests/
+results/temp
