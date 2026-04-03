@@ -1,1 +1,0 @@
-"""Projection tests placeholder."""
