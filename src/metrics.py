@@ -3,7 +3,7 @@ import numpy as np
 from src.loss import logistic_loss, score
 
 
-class ScalarSummary:
+class Stats:
     def __init__(self, mean, std, minimum):
         self.mean = mean
         self.std = std
@@ -13,11 +13,11 @@ class ScalarSummary:
 ## Input:
 ##     values: iterable or list of numbers
 ## Output:
-##     summary: ScalarSummary object
+##     summary: Stats object
 ##     summary.mean: float
 ##     summary.std: float
 ##     summary.minimum: float
-def summarize_scalars(values):
+def summary_stats(values):
     values = np.asarray(values)
     mean = np.mean(values)
     std = np.std(values)
@@ -46,10 +46,8 @@ def classification_error(w, example):
 ## Output:
 ##     average_loss: float
 def average_logistic_loss(w, dataset):
-    total_loss = 0
-    for (x, y) in dataset:
-        total_loss += logistic_loss(w, (x, y))
-    return float(total_loss / dataset.size())
+    # TODO:
+    raise NotImplementedError("TODO: implement average logistic loss.")
 
 
 ## Input:
@@ -59,7 +57,5 @@ def average_logistic_loss(w, dataset):
 ## Output:
 ##     average_error: float
 def average_classification_error(w, dataset):
-    total_error = 0
-    for (x, y) in dataset:
-        total_error += classification_error(w, (x, y))
-    return float(total_error / dataset.size())
+    # TODO: 
+    raise NotImplementedError("TODO: implement average classification error.")

@@ -1,65 +1,40 @@
 from src.config import NUM_TRIALS, SIGMAS, TRAINING_SIZES
-from src.metrics import average_classification_error, average_logistic_loss, summarize_scalars
+from src.metrics import mean_classification_error, mean_logistic_loss, summary_stats
 from src.sgd import sgd
 
 
-class ExperimentSettingResult:
-    def __init__(
-        self,
-        sigma,
-        n,
-        trial_losses,
-        trial_errors,
-        loss_mean,
-        loss_min,
-        loss_std,
-        estimated_excess_risk,
-        error_mean,
-        error_std,
-    ):
-        self.sigma = sigma
-        self.n = n
-        self.trial_losses = trial_losses
-        self.trial_errors = trial_errors
-        self.loss_mean = loss_mean
-        self.loss_min = loss_min
-        self.loss_std = loss_std
-        self.estimated_excess_risk = estimated_excess_risk
-        self.error_mean = error_mean
-        self.error_std = error_std
-
 #run the 30 tests for one sigma
-def run_setting(sigma, n, get_training_dataset, fixed_test_set, num_trials=NUM_TRIALS):
-    trial_losses = []
-    trial_errors = []
+def run_config(sigma, n, get_training_dataset, test_set, num_trials=NUM_TRIALS):
+    losses = []
+    errors = []
 
     for trial_id in range(1, num_trials + 1):
         #gets a fresh training stream to run sgd 
         training_dataset = get_training_dataset(n, sigma, trial_id)
         #w_hat  
-        predictor = sgd(training_dataset, n)
+        w_hat = sgd(training_dataset, n)
 
-        trial_losses.append(average_logistic_loss(predictor, fixed_test_set))
-        trial_errors.append(average_classification_error(predictor, fixed_test_set))
+        losses.append(mean_logistic_loss(w_hat, test_set))
+        errors.append(mean_classification_error(w_hat, test_set))
 
-    loss_summary = summarize_scalars(trial_losses)
-    error_summary = summarize_scalars(trial_errors)
+    loss_stats = summary_stats(losses)
+    error_stats = summary_stats(errors)
 
-    return ExperimentSettingResult(
-        sigma=sigma,
-        n=n,
-        trial_losses=tuple(trial_losses),
-        trial_errors=tuple(trial_errors),
-        loss_mean=loss_summary.mean,
-        loss_min=loss_summary.minimum,
-        loss_std=loss_summary.std,
-        estimated_excess_risk=loss_summary.mean - loss_summary.minimum,
-        error_mean=error_summary.mean,
-        error_std=error_summary.std,
-    )
+    return {
+        "sigma": sigma,
+        "n": n,
+        "losses": losses,
+        "errors": errors,
+        "loss_mean": loss_stats.mean,
+        "loss_min": loss_stats.minimum,
+        "loss_std": loss_stats.std,
+        "estimated_excess_risk": loss_stats.mean - loss_stats.minimum,
+        "error_mean": error_stats.mean,
+        "error_std": error_stats.std,
+    }
 
 #run the all over all sigma
-def run_project_experiments(
+def run_experiments(
     get_training_dataset,
     get_fixed_test_set,
     sigmas=SIGMAS,
@@ -69,15 +44,15 @@ def run_project_experiments(
     results = []
 
     for sigma in sigmas:
-        fixed_test_set = tuple(get_fixed_test_set(sigma))
+        test_set = tuple(get_fixed_test_set(sigma))
 
         for n in training_sizes:
             results.append(
-                run_setting(
+                run_config(
                     sigma=sigma,
                     n=n,
                     get_training_dataset=get_training_dataset,
-                    fixed_test_set=fixed_test_set,
+                    test_set=test_set,
                     num_trials=num_trials,
                 )
             )

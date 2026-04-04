@@ -14,7 +14,8 @@ def sgd(training_dataset, n):
 
     # initialize w_1 = 0
     w = np.zeros(PARAMETER_DIM, dtype=float)
-    sum_w = w.copy()
+    sum_w = np.zeros(PARAMETER_DIM, dtype=float)
+    sum_w += w
 
     for _ in range(n):
         #fresh example
