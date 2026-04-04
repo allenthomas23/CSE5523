@@ -18,8 +18,11 @@ class ScalarSummary:
 ##     summary.std: float
 ##     summary.minimum: float
 def summarize_scalars(values):
-    # TODO:
-    raise NotImplementedError("TODO: implement summary statistics for evaluation metrics.")
+    values = np.asarray(values)
+    mean = np.mean(values)
+    std = np.std(values)
+    minimum = np.min(values)
+    return ScalarSummary(mean, std, minimum)
 
 
 ## Input:
@@ -30,8 +33,10 @@ def summarize_scalars(values):
 ## Output:
 ##     error: float
 def classification_error(w, example):
-    # TODO:
-    raise NotImplementedError("TODO: implement binary classification error.")
+    if score(w, example) > 0:
+        return 0.0
+    else:
+        return 1.0
 
 
 ## Input:
@@ -41,8 +46,10 @@ def classification_error(w, example):
 ## Output:
 ##     average_loss: float
 def average_logistic_loss(w, dataset):
-    # TODO:
-    raise NotImplementedError("TODO: implement average logistic loss.")
+    total_loss = 0
+    for (x, y) in dataset:
+        total_loss += logistic_loss(w, (x, y))
+    return float(total_loss / dataset.size())
 
 
 ## Input:
@@ -52,5 +59,7 @@ def average_logistic_loss(w, dataset):
 ## Output:
 ##     average_error: float
 def average_classification_error(w, dataset):
-    # TODO: 
-    raise NotImplementedError("TODO: implement average classification error.")
+    total_error = 0
+    for (x, y) in dataset:
+        total_error += classification_error(w, (x, y))
+    return float(total_error / dataset.size())
