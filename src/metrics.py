@@ -22,7 +22,7 @@ def summary_stats(values):
     mean = np.mean(values)
     std = np.std(values)
     minimum = np.min(values)
-    return ScalarSummary(mean, std, minimum)
+    return Stats(mean, std, minimum)
 
 
 ## Input:
@@ -45,7 +45,7 @@ def classification_error(w, example):
 ##     each example: (x, y)
 ## Output:
 ##     average_loss: float
-def average_logistic_loss(w, dataset):
+def mean_logistic_loss(w, dataset):
     # TODO:
     raise NotImplementedError("TODO: implement average logistic loss.")
 
@@ -56,6 +56,6 @@ def average_logistic_loss(w, dataset):
 ##     each example: (x, y)
 ## Output:
 ##     average_error: float
-def average_classification_error(w, dataset):
+def mean_classification_error(w, dataset):
     # TODO: 
     raise NotImplementedError("TODO: implement average classification error.")
