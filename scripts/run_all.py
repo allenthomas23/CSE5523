@@ -7,7 +7,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from src.data import get_fixed_test_set, get_training_dataset
-from src.experiment import run_project_experiments
+from src.experiment import run_experiments
 
 
 def main():
@@ -15,7 +15,7 @@ def main():
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     try:
-        results = run_project_experiments(
+        results = run_experiments(
             get_training_dataset=get_training_dataset,
             get_fixed_test_set=get_fixed_test_set,
         )
@@ -26,7 +26,7 @@ def main():
         ) from exc
 
     output_path.write_text(
-        json.dumps([result.__dict__ for result in results], indent=2),
+        json.dumps(results, indent=2),
         encoding="utf-8",
     )
     print(f"Wrote {len(results)} experiment summaries to {output_path}")

@@ -5,7 +5,7 @@ PARAMETER_DIM = 5
 PARAMETER_RADIUS = 1.0
 
 M_BOUND = 2.0
-RHO_LIPSCHITZ = math.sqrt(2.0)
+LIPSCHITZ_CONST = math.sqrt(2.0)
 
 SIGMAS = (0.2, 0.4)
 TRAINING_SIZES = (50, 100, 500, 1000)
@@ -15,4 +15,4 @@ NUM_TRIALS = 30
 
 def step_size(n):
     t = n + 1
-    return M_BOUND / (RHO_LIPSCHITZ * math.sqrt(t))
+    return M_BOUND / (LIPSCHITZ_CONST * math.sqrt(t))
