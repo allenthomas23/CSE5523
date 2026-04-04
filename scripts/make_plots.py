@@ -27,18 +27,18 @@ def main():
         fig, _ = plot_excess_risk(
             results,
             sigma=sigma,
-            output_path=output_dir / f"sigma_{str(sigma).replace('.', '')}_excess_risk.png",
+            output_path=output_dir / ("sigma_" + str(sigma).replace(".", "") + "_excess_risk.png"),
         )
         plt.close(fig)
 
         fig, _ = plot_classification_error(
             results,
             sigma=sigma,
-            output_path=output_dir / f"sigma_{str(sigma).replace('.', '')}_classification_error.png",
+            output_path=output_dir / ("sigma_" + str(sigma).replace(".", "") + "_classification_error.png"),
         )
         plt.close(fig)
 
-    print(f"Wrote plots for sigma values {sigmas} to {output_dir}")
+    print("Wrote plots for sigma values " + str(sigmas) + " to " + str(output_dir))
 
 
 if __name__ == "__main__":

@@ -13,23 +13,17 @@ from src.experiment import run_experiments
 def main():
     output_path = Path("results/experiment_results.json")
     output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    try:
-        results = run_experiments(
-            get_training_dataset=get_training_dataset,
-            get_fixed_test_set=get_fixed_test_set,
-        )
-    except NotImplementedError as exc:
-        raise SystemExit(
-            "Data-generation helpers are not implemented yet. "
-            "Fill src.data.get_training_dataset and src.data.get_fixed_test_set first."
-        ) from exc
-
+    #run the experiments
+    results = run_experiments(
+        get_training_dataset=get_training_dataset,
+        get_fixed_test_set=get_fixed_test_set,
+    )
+    #write result json
     output_path.write_text(
         json.dumps(results, indent=2),
         encoding="utf-8",
     )
-    print(f"Wrote {len(results)} experiment summaries to {output_path}")
+    print("Wrote " + str(len(results)) + " experiment summaries to " + str(output_path))
 
 
 if __name__ == "__main__":
