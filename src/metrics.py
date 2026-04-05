@@ -49,7 +49,7 @@ def mean_logistic_loss(w, dataset):
     total_loss = 0
     for (x, y) in dataset:
         total_loss += logistic_loss(w, (x, y))
-    return float(total_loss / dataset.size())
+    return float(total_loss / len(dataset))
 
 
 ## Input:
@@ -62,4 +62,4 @@ def mean_classification_error(w, dataset):
     total_error = 0
     for (x, y) in dataset:
         total_error += classification_error(w, (x, y))
-    return float(total_error / dataset.size())
+    return float(total_error / len(dataset))
