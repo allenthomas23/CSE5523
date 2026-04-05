@@ -46,8 +46,10 @@ def classification_error(w, example):
 ## Output:
 ##     average_loss: float
 def mean_logistic_loss(w, dataset):
-    # TODO:
-    raise NotImplementedError("TODO: implement average logistic loss.")
+    total_loss = 0
+    for (x, y) in dataset:
+        total_loss += logistic_loss(w, (x, y))
+    return float(total_loss / dataset.size())
 
 
 ## Input:
@@ -57,5 +59,7 @@ def mean_logistic_loss(w, dataset):
 ## Output:
 ##     average_error: float
 def mean_classification_error(w, dataset):
-    # TODO: 
-    raise NotImplementedError("TODO: implement average classification error.")
+    total_error = 0
+    for (x, y) in dataset:
+        total_error += classification_error(w, (x, y))
+    return float(total_error / dataset.size())
